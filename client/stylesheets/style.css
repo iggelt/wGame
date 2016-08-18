@@ -1,0 +1,26 @@
+.battlefield{
+	width: 600px;
+	height: 600px;
+	border: 5px solid red;
+	position: relative;
+	left: 25%;
+}
+
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes mymove {
+    0%   {top: 0px; left: 100px;}
+    25%  {top: 100px; left: 280px; transform: rotate(180deg);}
+	50% {top: 200px; left: 350px; transform: rotate(360deg);}
+    75%  {top: 100px; left: 280px; transform: rotate(180deg);}
+    100% {top: 0px; left: 100px;}
+}
+
+/* Standard syntax */
+@keyframes mymove {
+    0%   {top: 0px; left: 100px;}
+    25%  {top: 100px; left: 280px; transform: rotate(180deg);}
+	50% {top: 200px; left: 350px; transform: rotate(360deg);}
+    75%  {top: 100px; left: 280px; transform: rotate(180deg);}
+    100% {top: 0px; left: 100px;}
+}
