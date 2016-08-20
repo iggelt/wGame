@@ -1,8 +1,7 @@
 <template name="weapon">
-	<div style="style=border: 5px solid orange; z-index: -1; top: {{top}}%; left: {{left}}%; transform: skewY(180deg); position: relative;">
-	  <img src="/images/{{name}}.png" {{attributes}} class="weapon" style="z-index: 100; border: 5px solid green; position: relative; animation: mymove {{duration}}s linear {{delay}}; ">
+	<div style="style=border: 5px solid orange; z-index: {{zind}}; {{bottomOrTop}}: {{bottomOrTopVal}}%; {{leftOrRight}}:{{leftOrRightVal}}%; transform: skewY(180deg); position: absolute;">
+	  <img src="/images/{{name}}.png"  class="weapon" style="{{bottomOrTop}}: {{bottomOrTopVal}}%; {{leftOrRight}}:{{leftOrRightVal}}%; z-index: {{zind}}; border: 5px solid green; position: absolute; animation: mymove {{duration}}s linear {{delay}}s; ">
 	</div>	
 
 
 </template> 
-
