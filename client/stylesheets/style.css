@@ -8,19 +8,60 @@
 
 
 /* Chrome, Safari, Opera */
-@-webkit-keyframes mymove {
-    0%   {top: 0px; left: 100px;}
-    25%  {top: 100px; left: 280px; transform: rotate(180deg);}
-	50% {top: 200px; left: 350px; transform: rotate(360deg);}
-    75%  {top: 100px; left: 280px; transform: rotate(180deg);}
-    100% {top: 0px; left: 100px;}
+@-webkit-keyframes moveLeft {
+    from {transform:translate(0%,0%) rotate(0deg);}
+    to  {transform:translate(-900%,0%) rotate(360deg);}
 }
 
 /* Standard syntax */
-@keyframes mymove {
-    0%   {top: 0px; left: 100px;}
-    25%  {top: 100px; left: 280px; transform: rotate(180deg);}
-	50% {top: 200px; left: 350px; transform: rotate(360deg);}
-    75%  {top: 100px; left: 280px; transform: rotate(180deg);}
-    100% {top: 0px; left: 100px;}
+@keyframes moveLeft {
+    from {transform:translate(0%,0%) rotate(0deg);}
+    to  {transform:translate(-900%,0%) rotate(360deg);}
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes moveRight {
+    from {transform:translate(0%,0%) rotate(0deg);}
+    to  {transform:translate(900%,0%)  rotate(360deg);}
+}
+
+/* Standard syntax */
+@keyframes moveRight {
+    from {transform:translate(0%,0%) rotate(0deg);}
+    to  {transform:translate(900%,0%) rotate(360deg);}
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes moveUp{
+    from {transform:translate(0%,0%) rotate(0deg)}
+    to  {transform:translate(0%,-1000%) rotate(360deg);}
+}
+
+/* Standard syntax */
+@keyframes moveUp {
+    from {transform:translate(0%,0%) rotate(0deg);}
+    to  {transform:translate(0%,-1000%) rotate(360deg);}
+}
+/* Chrome, Safari, Opera */
+@-webkit-keyframes moveDown{
+    from {transform:translate(0%,0%) rotate(0deg);}
+    to  {transform:translate(0%,1000%) rotate(360deg);}
+}
+
+/* Standard syntax */
+@keyframes moveDown {
+    from {transform:translate(0%,0%) rotate(0deg);}
+    to  {transform:translate(0%,1000%) rotate(360deg);}
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes gravity{
+    from {transform:translate(0%,0%);}
+    to  {transform:translate(0%,6000%);}
+}
+
+/* Standard syntax */
+@keyframes gravity {
+    from {transform:translate(0%,0%);}
+    to  {transform:translate(0%,6000%);}
 }
