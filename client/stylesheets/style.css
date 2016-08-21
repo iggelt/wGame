@@ -1,9 +1,10 @@
 .battlefield{
-	width: 600px;
-	height: 600px;
+	width: 60%;
+	height: 100vh;
 	border: 5px solid red;
 	position: relative;
-	left: 25%;
+	margin: 0 auto;
+	overflow: hidden;
 }
 
 
@@ -34,13 +35,13 @@
 /* Chrome, Safari, Opera */
 @-webkit-keyframes moveUp{
     from {transform:translate(0%,0%) rotate(0deg)}
-    to  {transform:translate(0%,-1000%) rotate(360deg);}
+    to  {transform:translate(0%,-2000%) rotate(360deg);}
 }
 
 /* Standard syntax */
 @keyframes moveUp {
     from {transform:translate(0%,0%) rotate(0deg);}
-    to  {transform:translate(0%,-1000%) rotate(360deg);}
+    to  {transform:translate(0%,-2000%) rotate(360deg);}
 }
 /* Chrome, Safari, Opera */
 @-webkit-keyframes moveDown{

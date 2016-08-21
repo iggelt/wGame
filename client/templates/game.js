@@ -13,8 +13,8 @@ Template.game.helpers({
 				for(r=Math.max(3-thisWeap.rank,1); r>0;r--){
 					thisWeap.objId				=	thisWeap._id;
 					delete thisWeap["_id"];
-					thisWeap.duration			=	10;
-					thisWeap.delay				=   2+thisWeap.rank;
+					thisWeap.duration			=	3;
+					thisWeap.delay				=   1+thisWeap.rank+Math.round(Math.random()*4);
 					thisWeap.zind				=   zind++; 
 					thisWeap.playState			= "running";
 					if(topLeftRightBottom%4==0){
@@ -26,12 +26,16 @@ Template.game.helpers({
 						thisWeap.animationNameB	= "gravity"
 						thisWeap.durationB			=	10;
 						thisWeap.angle				=	Math.random()*30;
+						thisWeap.xTranslate			=	100;
+						thisWeap.yTranslate			=	0;
 					}else if(topLeftRightBottom%3==0){
 						thisWeap.leftOrRight		= "left";
 						thisWeap.leftOrRightVal		= Math.round(Math.random()*100);
 						thisWeap.bottomOrTop		= "bottom";
 						thisWeap.bottomOrTopVal		= 100;
 						thisWeap.animationName	= "moveDown"
+						thisWeap.xTranslate			=	0;
+						thisWeap.yTranslate			=	-100;
 					}else if(topLeftRightBottom%2==0){
 						thisWeap.leftOrRight		= "right";
 						thisWeap.leftOrRightVal		= 100;
@@ -41,6 +45,8 @@ Template.game.helpers({
 						thisWeap.animationNameB	= "gravity"
 						thisWeap.angle				=	Math.random()*-30;
 						thisWeap.durationB			=	10;
+						thisWeap.xTranslate			=	-100;
+						thisWeap.yTranslate			=	0;
 					}else{
 						thisWeap.leftOrRight		= "left";
 						thisWeap.leftOrRightVal		= Math.round(Math.random()*100);
@@ -50,6 +56,8 @@ Template.game.helpers({
 						thisWeap.animationNameB	= "gravity"
 						thisWeap.angle				=	Math.random()*-30;
 						thisWeap.durationB			=	10;
+						thisWeap.xTranslate			=	0;
+						thisWeap.yTranslate			=	100;
 					}
 					topLeftRightBottom++;
 					armory.insert(thisWeap);
