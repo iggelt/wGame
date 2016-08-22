@@ -1,7 +1,7 @@
 GAME_TIME=5;
 weaponSelected=false;
 armory = new Meteor.Collection(null);
-Meteor.setTimeout(function(){alert("test finish")},GAME_TIME);
+Meteor.setTimeout(function(){alert("test finish")},GAME_TIME*3000);
 
 Template.game.helpers({
 	armory: function(){
