@@ -1,6 +1,7 @@
 GAME_TIME=5;
 weaponSelected=false;
 armory = new Meteor.Collection(null);
+Meteor.setTimeout(function(){alert("test finish")},GAME_TIME);
 
 Template.game.helpers({
 	armory: function(){
@@ -13,7 +14,7 @@ Template.game.helpers({
 				for(r=Math.max(3-thisWeap.rank,1); r>0;r--){
 					thisWeap.objId				=	thisWeap._id;
 					delete thisWeap["_id"];
-					thisWeap.duration			=	3;
+					thisWeap.duration			=	5;
 					thisWeap.delay				=   1+thisWeap.rank+Math.round(Math.random()*4);
 					thisWeap.zind				=   zind++; 
 					thisWeap.playState			= "running";
