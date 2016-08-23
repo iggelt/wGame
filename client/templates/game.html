@@ -1,11 +1,21 @@
 <template name="game">
   <div class="battlefield">
-  	{{#if result!==null}}
-  		<div>Your result is {{getRezultObj}}</div>
-  	{{/if}}
+  	{{#if getResultObj}}
+  		<div class="gameResult">Your result is {{getResultObj}}</div>
+  	{{else}}
+		
+		{{#each armory}}
+			{{>weapon}}
+		{{/each}}
+		
+		{{#if readyToStart}}
+			<div>choose your weapon</div>
+		{{else}}
+			<div>prepare to choose your weapon</div>
+		{{/if}}
+
+	{{/if}}
   	
-	{{#each armory}}
-		{{>weapon}}
-    {{/each}}
+
   </div>
 </template>

@@ -1,6 +1,6 @@
 Meteor.publish('weapons',function(){
 	return Weapons.find();
 });
-Meteor.publish('games',function(gameId){
+Meteor.publish('oneGame',function(gameId){
 	return Games.find(gameId);
 })

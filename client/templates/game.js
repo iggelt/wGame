@@ -1,12 +1,14 @@
 GAME_TIME=5;
 weaponSelected=false;
 armory = new Meteor.Collection(null);
+
 Meteor.setTimeout(function(){
 	armory.update({},{$set: {playState: "paused"}},{multi: true});
-	var cheapestObj = Weapons.findOne(,{sort:{rank:-1}); 
+	var cheapestObj = Weapons.findOne({},{sort:{rank:1}}); 
 	Games.update(Games.findOne({})._id,{$set: {result: cheapestObj}});	
 
 },GAME_TIME*3000);
+
 
 Template.game.helpers({
 	armory: function(){
@@ -23,6 +25,7 @@ Template.game.helpers({
 					thisWeap.delay				=   1+thisWeap.rank+Math.round(Math.random()*4);
 					thisWeap.zind				=   zind++; 
 					thisWeap.playState			= "running";
+					thisWeap.imgLoaded			= false;
 					if(topLeftRightBottom%4==0){
 						thisWeap.leftOrRight		= "left";
 						thisWeap.leftOrRightVal		= 100;
@@ -74,7 +77,10 @@ Template.game.helpers({
 		}
 		return armory.find();
 	},
-	getRezultObj:{
-		return Weapons.findOne(rezult).name;
+	getResultObj: function(){
+		return Weapons.findOne(Games.findOne().result).name;
+	},
+	readyToStart: function(){
+		return armory.find({imgLoaded: false}).count()>0;
 	}
 })

@@ -9,5 +9,9 @@ Template.weapon.events({
 		Games.update(Games.findOne({})._id,{$set: {result: this.objId}});
 		//Meteor.call('writeResult',,function(error,result)
 		//alert(this.name);
+	},
+	'load .weapon': function(e){
+		e.preventDefault();
+		armory.update(this.objId,{$set: {imgLoaded: true}});
 	}
 })
