@@ -68,5 +68,8 @@ Template.game.helpers({
 			
 		}
 		return armory.find();
+	},
+	getRezultObj:{
+		return Weapons.findOne(rezult).name;
 	}
 })
