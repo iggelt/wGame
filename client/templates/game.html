@@ -1,5 +1,9 @@
 <template name="game">
   <div class="battlefield">
+  	{{#if result!==null}}
+  		<div>Your result is {{getRezultObj}}</div>
+  	{{/if}}
+  	
 	{{#each armory}}
 		{{>weapon}}
     {{/each}}
