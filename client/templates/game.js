@@ -1,7 +1,12 @@
 GAME_TIME=5;
 weaponSelected=false;
 armory = new Meteor.Collection(null);
-Meteor.setTimeout(function(){alert("test finish")},GAME_TIME*3000);
+Meteor.setTimeout(function(){
+	armory.update({},{$set: {playState: "paused"}},{multi: true});
+	var cheapestObj = Weapons.findOne(,{sort:{rank:-1}); 
+	Games.update(Games.findOne({})._id,{$set: {result: cheapestObj}});	
+
+},GAME_TIME*3000);
 
 Template.game.helpers({
 	armory: function(){
