@@ -6,6 +6,28 @@
 	margin: 0 auto;
 	/*overflow: hidden;*/
 }
+.loadingBar{
+
+
+}
+.emptyBar{
+	width: 60%;
+	height: 1vh;
+	border: 2px solid grey;
+	position: absolute;
+	margin: auto;
+}
+.bar{
+	height: 1vh;
+	background: red;
+	position: relative;
+}
+.countDown{
+	font-size: 10em;
+	color: grey;
+	position: absolute;
+	margin: auto;
+}
 
 
 /* Chrome, Safari, Opera */

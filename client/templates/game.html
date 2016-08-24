@@ -1,17 +1,30 @@
 <template name="game">
   <div class="battlefield">
   	{{#if getResultObj}}
-  		<div class="gameResult">Your result is {{getResultObj}}</div>
+  		<div class="gameResult">
+			<div>Your result is {{getResultObj}}</div>
+			<img src="/images/{{getResultObj}}.png">
+		
+		</div>
   	{{else}}
 		
 		{{#each armory}}
 			{{>weapon}}
 		{{/each}}
 		
-		{{#if readyToStart}}
-			<div>choose your weapon</div>
-		{{else}}
-			<div>prepare to choose your weapon</div>
+		{{#if gameNotStarted}}
+			{{#if readyToStart}}
+				<div class="countDown">
+					<div >{{countDown}}</div>
+				</div>
+
+			{{else}}
+				<div class="loadingBar"> loading objects  
+					<div class="emptyBar">
+						<div class="bar" style="width: {{objectsLoaded}}%"></div>
+					</div>		
+				</div>
+			{{/if}}
 		{{/if}}
 
 	{{/if}}
