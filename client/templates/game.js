@@ -42,8 +42,8 @@ Template.game.helpers({
 				for(r=Math.max(3-thisWeap.rank,1); r>0;r--){
 					thisWeap.objId				=	currWeap._id;
 					delete thisWeap["_id"];
-					thisWeap.duration			=	Games.findOne().durationOfGame/3;
-					thisWeap.delay				=   currWeap.rank-1+Math.round(Math.random()*4);
+					thisWeap.duration			=	Math.round(Games.findOne().durationOfGame/3);
+					thisWeap.delay				=   Math.max(currWeap.rank-1+Math.round(Math.random()*4),0.01);
 					thisWeap.zind				=   zind++; 
 					thisWeap.playState			= "paused";
 					thisWeap.imgLoaded			= false;
@@ -55,7 +55,7 @@ Template.game.helpers({
 						thisWeap.animationName	= "moveLeft"
 						thisWeap.animationNameB	= "gravity"
 						thisWeap.durationB			=	5;
-						thisWeap.angle				=	Math.random()*30;
+						thisWeap.angle				=	Math.round(Math.random()*30);
 						thisWeap.xTranslate			=	100;
 						thisWeap.yTranslate			=	0;
 					}else if(topLeftRightBottom%3==0){
@@ -73,7 +73,7 @@ Template.game.helpers({
 						thisWeap.bottomOrTopVal		= Math.round(Math.random()*100);
 						thisWeap.animationName	= "moveRight"
 						thisWeap.animationNameB	= "gravity"
-						thisWeap.angle				=	Math.random()*-30;
+						thisWeap.angle				=	Math.round(Math.random()*-30);
 						thisWeap.durationB			=	5;
 						thisWeap.xTranslate			=	-100;
 						thisWeap.yTranslate			=	0;
@@ -84,7 +84,7 @@ Template.game.helpers({
 						thisWeap.bottomOrTopVal		= 100;
 						thisWeap.animationName	= "moveUp"
 						thisWeap.animationNameB	= "gravity"
-						thisWeap.angle				=	Math.random()*-30;
+						thisWeap.angle				=	Math.round(Math.random()*-30);
 						thisWeap.durationB			=	10;
 						thisWeap.xTranslate			=	0;
 						thisWeap.yTranslate			=	100;

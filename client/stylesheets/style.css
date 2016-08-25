@@ -4,18 +4,21 @@
 	border: 5px solid red;
 	position: relative;
 	margin: 0 auto;
-	/*overflow: hidden;*/
+	overflow: hidden;
 }
-.loadingBar{
-
-
+.loadingBar,
+.countDown,
+.gameResult{
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 }
 .emptyBar{
 	width: 60%;
 	height: 1vh;
 	border: 2px solid grey;
-	position: absolute;
-	margin: auto;
 }
 .bar{
 	height: 1vh;
@@ -25,8 +28,6 @@
 .countDown{
 	font-size: 10em;
 	color: grey;
-	position: absolute;
-	margin: auto;
 }
 
 
