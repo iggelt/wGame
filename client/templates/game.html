@@ -1,6 +1,6 @@
 <template name="game">
   <div class="battlefield">
-  	{{#if getResultObj}}
+  	{{#if getGameIsOver}}
   		<div class="gameResult">
 			<div>Your result is {{getResultObj}}</div>
 			<img src="/images/{{getResultObj}}.png">

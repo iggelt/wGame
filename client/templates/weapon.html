@@ -1,7 +1,7 @@
 <template name="weapon">
-	<div style="z-index: {{zind}}; {{bottomOrTop}}: {{bottomOrTopVal}}%; {{leftOrRight}}:{{leftOrRightVal}}%; position: absolute; animation: {{animationNameB}} {{durationB}}s ease-in {{delay}}s {{playState}};">>
+	<div style="z-index: {{zind}}; {{bottomOrTop}}: {{bottomOrTopVal}}%; {{leftOrRight}}:{{leftOrRightVal}}%; position: absolute; animation: {{animationNameB}} {{durationB}}s ease-in {{delay}}s {{playState}};{{display}}">>
 		<div style="z-index: {{zind}}; {{bottomOrTop}}: {{bottomOrTopVal}}%; {{leftOrRight}}:{{leftOrRightVal}}%; position: absolute; transform:rotate({{angle}}deg);">
-			<img src="/images/{{name}}.png"  class="weapon" style=" {{bottomOrTop}}: {{bottomOrTopVal}}%; {{leftOrRight}}:{{leftOrRightVal}}%; z-index: {{zind}}; position: absolute; animation: {{animationName}} {{duration}}s linear {{delay}}s {{playState}}; transform:translate({{xTranslate}}%,{{yTranslate}}%)">
+			<img src="/images/{{name}}.png"  class="weapon" style="height: {{height}}px; width: {{width}}px; {{bottomOrTop}}: {{bottomOrTopVal}}%; {{leftOrRight}}:{{leftOrRightVal}}%; z-index: {{zind}}; position: absolute; animation: {{animationName}} {{duration}}s linear {{delay}}s {{playState}}; transform: translate({{xTranslate}}%,{{yTranslate}}%);">
 		</div>
 	</div>
 

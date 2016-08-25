@@ -2,9 +2,7 @@ armory = new Meteor.Collection(null);
 Session.set("gameNotStarted", true);
 
 function countDown(){
-	console.log("cd");
 	var secondsLeft =  Session.get("countDown");
-	console.log(secondsLeft>0);
 	if (secondsLeft>0){	
 		Meteor.setTimeout(function(){
 			Session.set("countDown", --secondsLeft);
@@ -47,6 +45,9 @@ Template.game.helpers({
 					thisWeap.zind				=   zind++; 
 					thisWeap.playState			= "paused";
 					thisWeap.imgLoaded			= false;
+					thisWeap.display			= "";
+					this.height					= "";
+					this.width					= "";
 					if(topLeftRightBottom%4==0){
 						thisWeap.leftOrRight		= "left";
 						thisWeap.leftOrRightVal		= 100;
@@ -100,6 +101,10 @@ Template.game.helpers({
 	},
 	getResultObj: function(){
 		return Weapons.findOne(Games.findOne().result).name;
+	},
+	getGameIsOver: function(){
+		console.log(Session.get("endGameAnimation"));
+		return Weapons.findOne(Games.findOne().result)!==undefined&&Session.get("endGameAnimation")!==true;
 	},
 	readyToStart: function(){
 		var ready=!(armory.find({imgLoaded: false}).count()>0);
