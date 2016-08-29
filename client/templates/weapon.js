@@ -11,6 +11,7 @@ Template.weapon.events({
 		Games.update(Games.findOne({})._id,{$set: {result: this.objId}});
 		Session.set("gameStatus","finishAnimation");
 		Meteor.setTimeout(function(){
+			console.log("click .weaponTimeoutFunctionWorked");
 			if(Session.get("gameStatus")==="finishAnimation"){
 				Session.set("gameStatus","finished");
 			}
