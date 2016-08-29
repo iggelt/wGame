@@ -1,11 +1,13 @@
 armory = new Meteor.Collection(null);
 Session.set("gameStatus", "notStarted");
-alert("file"); 
+alert("file initialized"); 
 
 function countDown(){
+	console.log("countDownWorked");
 	var secondsLeft =  Session.get("countDown");
 	if (secondsLeft>0&&Session.get("gameStatus")=== "countDown"){	
 		Meteor.setTimeout(function(){
+			console.log("countDown()TimeoutFunctionWorked");
 			Session.set("countDown", --secondsLeft);
 			countDown();
 		},1000);
@@ -15,12 +17,14 @@ function countDown(){
 }
 
 function startGame(){
+	console.log("startGameWorked");
 	//if(Games.find()>0){
 	Session.set("gameStatus", "started");
 	console.log(Session.get("gameStatus")+"  "+Games.findOne()._id);
 	armory.update({},{$set: {playState: "running"}},{multi: true});
 	
 		Meteor.setTimeout(function(){
+			console.log("startGame()TimeoutFunctionWorked");
 			if(Session.set("gameStatus") === "started"){
 				armory.update({},{$set: {playState: "paused"}},{multi: true});
 				var cheapestObj = Weapons.findOne({},{sort:{rank:1}}); 
@@ -37,12 +41,13 @@ Template.game.onDestroyed(function () {
   armory.remove({});
   Session.set("gameStatus", "notStarted");
   Session.set("countDown", undefined);
-  console.log("del");
+  console.log("====================================================================================");
   	console.log(Session.get("gameStatus")+"  "+Games.findOne()._id);
 	alert("destroyed"); 
 });
 Template.game.helpers({
 	armory: function(){
+		console.log("armoryCalled");
 		if(armory.find().count()==0){
 			var weapArr = Weapons.find().fetch();		
 			var zind=1000;
@@ -117,12 +122,15 @@ Template.game.helpers({
 		return armory.find();
 	},
 	getResultObj: function(){
+		console.log("getResultObjCalled");
 		return Weapons.findOne(Games.findOne().result).name;
 	},
 	getGameIsOver: function(){
+		console.log("getGameIsOverCalled");
 		return Weapons.findOne(Games.findOne().result)!==undefined&&Session.get("gameStatus")!=="finishAnimation";
 	},
 	readyToStart: function(){
+		console.log("readyToStartCalled");
 		var ready=!(armory.find({imgLoaded: false}).count()>0);
 		Session.setDefault("gameStatus","notStarted");
 		if(ready&&(Session.get("gameStatus")==="notStarted"||Session.get("gameStatus")===undefined)){
@@ -134,20 +142,25 @@ Template.game.helpers({
 		return ready;
 	},
 	gameIsStarting: function(){
+		console.log("gameIsStartingCalled");
 		return Session.get("gameStatus") === "notStarted"||Session.get("gameStatus") === "countDown";
 	},
 	objectsLoaded: function(){
+		console.log("objectsLoadedCalled");
 		var totalNumberOfObjects = armory.find().count();
 		var notFoundedObjects 	 = armory.find({imgLoaded: false}).count();
 		return ((totalNumberOfObjects-notFoundedObjects)/totalNumberOfObjects)*100;
 	},	
 	countDown: function(){
+		console.log("countDownCalled");
 		return Session.get("countDown");
 	},
 		gameStatus: function(){
+			console.log("gameStatusCalled");
 		return Session.get("gameStatus")===undefined;
 	},
 			gameStatus2: function(){
+			console.log("gameStatusCalled2");
 		return Session.get("gameStatus");
 	}
 })
