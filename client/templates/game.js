@@ -1,29 +1,46 @@
 armory = new Meteor.Collection(null);
-Session.set("gameNotStarted", true);
+Session.set("gameStatus", "notStarted");
+alert("file"); 
 
 function countDown(){
 	var secondsLeft =  Session.get("countDown");
-	if (secondsLeft>0){	
+	if (secondsLeft>0&&Session.get("gameStatus")=== "countDown"){	
 		Meteor.setTimeout(function(){
 			Session.set("countDown", --secondsLeft);
 			countDown();
 		},1000);
-	}else{
+	}else if((secondsLeft===0||secondsLeft<0)&&Session.get("gameStatus")=== "countDown"){
 		startGame();
 	}
 }
 
 function startGame(){
-	Session.set("gameNotStarted", false);
+	//if(Games.find()>0){
+	Session.set("gameStatus", "started");
+	console.log(Session.get("gameStatus")+"  "+Games.findOne()._id);
 	armory.update({},{$set: {playState: "running"}},{multi: true});
-	Meteor.setTimeout(function(){
-		armory.update({},{$set: {playState: "paused"}},{multi: true});
-		var cheapestObj = Weapons.findOne({},{sort:{rank:1}}); 
-		Games.update(Games.findOne({})._id,{$set: {result: cheapestObj}});	
-	},Games.findOne().durationOfGame*1000);
+	
+		Meteor.setTimeout(function(){
+			if(Session.set("gameStatus") === "started"){
+				armory.update({},{$set: {playState: "paused"}},{multi: true});
+				var cheapestObj = Weapons.findOne({},{sort:{rank:1}}); 
+				Games.update(Games.findOne({})._id,{$set: {result: cheapestObj}});
+				Session.set("gameStatus","finished");
+			}
+		
+		},Games.findOne().durationOfGame*1000);
+	//}
 }
 
 
+Template.game.onDestroyed(function () {
+  armory.remove({});
+  Session.set("gameStatus", "notStarted");
+  Session.set("countDown", undefined);
+  console.log("del");
+  	console.log(Session.get("gameStatus")+"  "+Games.findOne()._id);
+	alert("destroyed"); 
+});
 Template.game.helpers({
 	armory: function(){
 		if(armory.find().count()==0){
@@ -96,27 +113,28 @@ Template.game.helpers({
 			}
 
 			
-		}
+		}		
 		return armory.find();
 	},
 	getResultObj: function(){
 		return Weapons.findOne(Games.findOne().result).name;
 	},
 	getGameIsOver: function(){
-		console.log(Session.get("endGameAnimation"));
-		return Weapons.findOne(Games.findOne().result)!==undefined&&Session.get("endGameAnimation")!==true;
+		return Weapons.findOne(Games.findOne().result)!==undefined&&Session.get("gameStatus")!=="finishAnimation";
 	},
 	readyToStart: function(){
 		var ready=!(armory.find({imgLoaded: false}).count()>0);
-		if(ready&&Session.get("countDownStarted")!=true){
+		Session.setDefault("gameStatus","notStarted");
+		if(ready&&(Session.get("gameStatus")==="notStarted"||Session.get("gameStatus")===undefined)){
 			Session.set("countDown", 3);
-			Session.set("countDownStarted", true);
+			Session.set("gameStatus", "countDown");
+			alert(Session.get("gameStatus"));
 			countDown();
 		}
 		return ready;
 	},
-	gameNotStarted: function(){
-		return Session.get("gameNotStarted");
+	gameIsStarting: function(){
+		return Session.get("gameStatus") === "notStarted"||Session.get("gameStatus") === "countDown";
 	},
 	objectsLoaded: function(){
 		var totalNumberOfObjects = armory.find().count();
@@ -125,5 +143,11 @@ Template.game.helpers({
 	},	
 	countDown: function(){
 		return Session.get("countDown");
+	},
+		gameStatus: function(){
+		return Session.get("gameStatus")===undefined;
+	},
+			gameStatus2: function(){
+		return Session.get("gameStatus");
 	}
 })

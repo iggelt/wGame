@@ -4,7 +4,7 @@
 	border: 5px solid red;
 	position: relative;
 	margin: 0 auto;
-	overflow: hidden;
+	/*overflow: hidden;*/
 }
 .loadingBar,
 .countDown,

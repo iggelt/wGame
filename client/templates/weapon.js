@@ -9,9 +9,11 @@ Template.weapon.events({
 		armory.update({},{$set: {playState: "paused",display: "display: none;",height: newHeight,width: newWidth }},{multi: true});
 		armory.update(this._id,{$set: {angle: 0,display: "",}});
 		Games.update(Games.findOne({})._id,{$set: {result: this.objId}});
-		Session.set("endGameAnimation",true);
+		Session.set("gameStatus","finishAnimation");
 		Meteor.setTimeout(function(){
-			Session.set("endGameAnimation",false);
+			if(Session.get("gameStatus")==="finishAnimation"){
+				Session.set("gameStatus","finished");
+			}
 		},1000);
 		
 		

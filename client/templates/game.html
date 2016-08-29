@@ -1,5 +1,7 @@
 <template name="game">
   <div class="battlefield">
+    <div>{{gameStatus}}</div>
+	<div>{{gameStatus2}}</div>
   	{{#if getGameIsOver}}
   		<div class="gameResult">
 			<div>Your result is {{getResultObj}}</div>
@@ -12,7 +14,7 @@
 			{{>weapon}}
 		{{/each}}
 		
-		{{#if gameNotStarted}}
+		{{#if gameIsStarting}}
 			{{#if readyToStart}}
 				<div class="countDown">
 					<div >{{countDown}}</div>
