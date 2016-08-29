@@ -1,31 +1,38 @@
 armory = new Meteor.Collection(null);
 Session.set("gameStatus", "notStarted");
-alert("file initialized"); 
+Session.set("countDownTimeout", "null");
+Session.set("startGameTimeout", "null");
+Session.set("clickWeaponTimeout", "null");
 
 function countDown(){
 	console.log("countDownWorked");
+	console.log(Session.get("gameStatus"));
 	var secondsLeft =  Session.get("countDown");
 	if (secondsLeft>0&&Session.get("gameStatus")=== "countDown"){	
-		Meteor.setTimeout(function(){
+		var timeoutId=Meteor.setTimeout(function(){
 			console.log("countDown()TimeoutFunctionWorked");
+			console.log(Session.get("gameStatus"));
 			Session.set("countDown", --secondsLeft);
 			countDown();
 		},1000);
+		Session.set("countDownTimeout", timeoutId);
 	}else if((secondsLeft===0||secondsLeft<0)&&Session.get("gameStatus")=== "countDown"){
 		startGame();
 	}
 }
 
 function startGame(){
-	console.log("startGameWorked");
+
 	//if(Games.find()>0){
 	Session.set("gameStatus", "started");
-	console.log(Session.get("gameStatus")+"  "+Games.findOne()._id);
+	console.log("startGameWorked");
+	console.log(Session.get("gameStatus"));
 	armory.update({},{$set: {playState: "running"}},{multi: true});
 	
-		Meteor.setTimeout(function(){
+		var timeoutId=Meteor.setTimeout(function(){
 			console.log("startGame()TimeoutFunctionWorked");
-			if(Session.set("gameStatus") === "started"){
+			console.log(Session.get("gameStatus"));
+			if(Session.get("gameStatus") === "started"){
 				armory.update({},{$set: {playState: "paused"}},{multi: true});
 				var cheapestObj = Weapons.findOne({},{sort:{rank:1}}); 
 				Games.update(Games.findOne({})._id,{$set: {result: cheapestObj}});
@@ -33,21 +40,39 @@ function startGame(){
 			}
 		
 		},Games.findOne().durationOfGame*1000);
+		Session.set("startGameTimeout",timeoutId);
 	//}
 }
 
 
 Template.game.onDestroyed(function () {
   armory.remove({});
+  var countDownId		=	Session.get("countDownTimeout");
+  var startGameId		=	Session.get("startGameTimeout");
+  var weaponClickedId 	=	Session.set("clickWeaponTimeout");
+  if(countDownId){
+	  Meteor.clearTimeout(countDownId);
+	  console.log("countDownTimeout cleared");
+  }
+  if(startGameId){
+	  Meteor.clearTimeout(startGameId);
+	  console.log("startGameTimeout cleared");
+  }
+  if(weaponClickedId){
+	  Meteor.clearTimeout(weaponClickedId);
+	  console.log("weaponClickedTimeout cleared");
+  }
+
+
   Session.set("gameStatus", "notStarted");
   Session.set("countDown", undefined);
   console.log("====================================================================================");
   	console.log(Session.get("gameStatus")+"  "+Games.findOne()._id);
-	alert("destroyed"); 
 });
 Template.game.helpers({
 	armory: function(){
 		console.log("armoryCalled");
+		console.log(Session.get("gameStatus"));
 		if(armory.find().count()==0){
 			var weapArr = Weapons.find().fetch();		
 			var zind=1000;
@@ -123,44 +148,51 @@ Template.game.helpers({
 	},
 	getResultObj: function(){
 		console.log("getResultObjCalled");
+		console.log(Session.get("gameStatus"));
 		return Weapons.findOne(Games.findOne().result).name;
 	},
 	getGameIsOver: function(){
 		console.log("getGameIsOverCalled");
+		console.log(Session.get("gameStatus"));
 		return Weapons.findOne(Games.findOne().result)!==undefined&&Session.get("gameStatus")!=="finishAnimation";
 	},
 	readyToStart: function(){
 		console.log("readyToStartCalled");
+		console.log(Session.get("gameStatus"));
 		var ready=!(armory.find({imgLoaded: false}).count()>0);
 		Session.setDefault("gameStatus","notStarted");
 		if(ready&&(Session.get("gameStatus")==="notStarted"||Session.get("gameStatus")===undefined)){
 			Session.set("countDown", 3);
 			Session.set("gameStatus", "countDown");
-			alert(Session.get("gameStatus"));
 			countDown();
 		}
 		return ready;
 	},
 	gameIsStarting: function(){
 		console.log("gameIsStartingCalled");
+		console.log(Session.get("gameStatus"));
 		return Session.get("gameStatus") === "notStarted"||Session.get("gameStatus") === "countDown";
 	},
 	objectsLoaded: function(){
 		console.log("objectsLoadedCalled");
+		console.log(Session.get("gameStatus"));
 		var totalNumberOfObjects = armory.find().count();
 		var notFoundedObjects 	 = armory.find({imgLoaded: false}).count();
 		return ((totalNumberOfObjects-notFoundedObjects)/totalNumberOfObjects)*100;
 	},	
 	countDown: function(){
 		console.log("countDownCalled");
+		console.log(Session.get("gameStatus"));
 		return Session.get("countDown");
 	},
 		gameStatus: function(){
 			console.log("gameStatusCalled");
+			console.log(Session.get("gameStatus"));
 		return Session.get("gameStatus")===undefined;
 	},
 			gameStatus2: function(){
 			console.log("gameStatusCalled2");
+			console.log(Session.get("gameStatus"));
 		return Session.get("gameStatus");
 	}
 })

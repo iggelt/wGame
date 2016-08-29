@@ -10,12 +10,14 @@ Template.weapon.events({
 		armory.update(this._id,{$set: {angle: 0,display: "",}});
 		Games.update(Games.findOne({})._id,{$set: {result: this.objId}});
 		Session.set("gameStatus","finishAnimation");
-		Meteor.setTimeout(function(){
+		var timeoutId=Meteor.setTimeout(function(){
 			console.log("click .weaponTimeoutFunctionWorked");
+			console.log(Session.get("gameStatus"));
 			if(Session.get("gameStatus")==="finishAnimation"){
 				Session.set("gameStatus","finished");
 			}
 		},1000);
+		Session.set("clickWeaponTimeout", timeoutId);
 		
 		
 	},
