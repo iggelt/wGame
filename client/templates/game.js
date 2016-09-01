@@ -190,9 +190,9 @@ Template.game.helpers({
 			console.log(Session.get("gameStatus"));
 		return Session.get("gameStatus")===undefined;
 	},
-			gameStatus2: function(){
+	gameStatus2: function(){
 			console.log("gameStatusCalled2");
 			console.log(Session.get("gameStatus"));
 		return Session.get("gameStatus");
-	}
+	},
 })
